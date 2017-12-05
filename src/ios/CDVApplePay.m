@@ -68,6 +68,18 @@
     [lib openPaymentSetup];
 }
 
+- (void)canMakePayments:(CDVInvokedUrlCommand*)command
+{
+    if ([PKPaymentAuthorizationViewController canMakePayments]) {
+        //  Pay is supported!
+        CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"Apple Pay is supported on this device!"];
+        [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+    } else {
+        //  Pay is NOT supported!
+        CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Apple Pay is not supported on this device!"];
+        [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+    }
+}
 
 
 - (void)getAllowsApplePay:(CDVInvokedUrlCommand*)command
@@ -108,7 +120,7 @@
     paymentRequest.supportedNetworks = @[PKPaymentNetworkMasterCard, PKPaymentNetworkVisa, PKPaymentNetworkPrivateLabel];
     paymentRequest.countryCode = countryCode;
     paymentRequest.currencyCode = arguments[@"currency"];
-    
+
     // Configure your request here.
     NSString *amountString = [NSString stringWithFormat:@"%.02f", [arguments[@"amount"] floatValue]];
     NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:amountString];

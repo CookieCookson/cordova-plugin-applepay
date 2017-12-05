@@ -25,6 +25,12 @@
 
 
 /**
+ * Check if Apple Pay is supported
+ */
+- (void)canMakePayments:(CDVInvokedUrlCommand*)command;
+
+
+/**
  * Check if Apple Pay is available
  */
 - (void)getAllowsApplePay:(CDVInvokedUrlCommand*)command;

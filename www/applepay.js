@@ -44,6 +44,14 @@ module.exports = {
 
 
     /**
+     * Checks if the device supports Apple Pay
+     */
+    canMakePayments: function(successCallback, errorCallback) {
+        exec(successCallback, errorCallback, 'ApplePay', 'canMakePayments', []);
+    },
+
+
+    /**
      * Retrive Stripe token
      * @param  {object} infos
      * {
